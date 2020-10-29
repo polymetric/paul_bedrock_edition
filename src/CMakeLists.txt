@@ -1,10 +1,11 @@
 set(
 	SOURCES_LIST
 	main.c
-	input/keyHandler.c
+	draw.c
+	camera.c
 )
 
-if(MINGW)
+if(MINGW AND NOT CMAKE_BUILD_TYPE MATCHES Debug)
 	add_executable(
 		paul
 		WIN32
