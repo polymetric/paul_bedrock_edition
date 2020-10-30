@@ -9,5 +9,8 @@ Camera* initCamera(float x, float y, float z) {
     camera->y = y;
     camera->z = z;
 
+    camera->pitch = 0.0f;
+    camera->yaw = 0.0f;
+
     return camera;
 }

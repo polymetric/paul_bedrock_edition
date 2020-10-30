@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include "gameState.h"
+#include "input.h"
 #include "draw.h"
 #include "camera.h"
 
@@ -14,7 +15,14 @@
 int main(int argc, char **argv) {
 	GameState *gameState = initGameState();
     gameState->display = initDisplay();
-	GLFWwindow *window = gameState->display->window;
+
+	// initialize the key callback and give the callback
+	// a pointer to the game state
+	glfwSetKeyCallback(gameState->display->window, &keyCallback);
+	glfwSetWindowUserPointer(gameState->display->window, gameState);
+
+	// makes `window` a shorthand for `gameState->display->window`
+	GLFWwindow *window = gameState->display->window; 
 
 	// TEMPORARY camera
 	gameState->camera = initCamera(0.0f, 0.0f, 5.0f);
@@ -26,11 +34,11 @@ int main(int argc, char **argv) {
 	// main loop
 	while (!glfwWindowShouldClose(window)) {
 		// TICK
+		tickInput(gameState, window);
 		thing1Rot += 1.0f;
 		thing2Rot += 1.0f;
 
-		// RENDER
-		// clear screen
+		// DRAW
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 

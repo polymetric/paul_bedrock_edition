@@ -3,12 +3,10 @@
 
 #include <GLFW/glfw3.h>
 
-void keyCallback(
-	GLFWwindow* window,
-	int key,
-	int scancode,
-	int action,
-	int mods
-);
+#include "gameState.h"
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+void tickInput(GameState *gameState, GLFWwindow *window);
 
 #endif

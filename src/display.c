@@ -6,8 +6,6 @@
 
 #include "display.h"
 
-#include "input.h"
-#include "draw.h"
 #include "camera.h"
 
 #define WINDOW_DEFAULT_WIDTH    800
@@ -18,7 +16,7 @@ Display *initDisplay() {
     
 	glfwInit();
 		
-	// gl version 2.1 core
+	// gl version 2.1
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
@@ -38,7 +36,6 @@ Display *initDisplay() {
 	}
 	
 	glfwMakeContextCurrent(display->window);
-	glfwSetKeyCallback(display->window, &keyCallback);
 	
 	// load GLEW and check for errors
 	GLenum err = glewInit();
