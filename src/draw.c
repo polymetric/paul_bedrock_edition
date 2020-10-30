@@ -3,6 +3,10 @@
 
 #include "draw.h"
 
+void drawAll() {
+    
+}
+
 void drawQuad(float size) {
     glBegin(GL_QUADS);
         glVertex3f(-size, -size,  0.0f);

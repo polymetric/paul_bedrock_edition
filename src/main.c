@@ -1,75 +1,24 @@
-// stdlib includes
 #include <stdlib.h>
 #include <stdio.h>
 
-// gl includes
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-// local includes
+#include "gameState.h"
 #include "draw.h"
 #include "camera.h"
 
-// parameters
 #define WINDOW_DEFAULT_WIDTH    800
 #define WINDOW_DEFAULT_HEIGHT   600
 
-// called whenever a key is pressed
-// we use camelcase even though it's terrible,
-// because all the GL stuff uses it :/
-void keyCallback(
-	GLFWwindow* window,
-	int key,
-	int scancode,
-	int action,
-	int mods
-) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
-	}
-}
-
-int main(int argc, char** argv) {
-	glfwInit();
-		
-	// gl version 2.1 core
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
-	
-	// create window and check for errors
-	GLFWwindow* window = glfwCreateWindow(
-		WINDOW_DEFAULT_WIDTH,		// width
-		WINDOW_DEFAULT_HEIGHT,		// height
-		"Bruh",						// title
-		NULL,						// monitor
-		NULL						//
-	);
-	if (window == NULL) {
-		printf("cant create window oof\n");
-		glfwTerminate();
-		exit(-1);
-	}
-	
-	glfwMakeContextCurrent(window);
-
-	glfwSetKeyCallback(window, &keyCallback);
-	
-	// // load GLAD and check for errors
-	// if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-	// 	printf("can't init GLAD\n");
-	// 	exit(-1);
-	// }
-
-	// load GLEW and check for errors
-	GLenum err = glewInit();
-	if (err != GLEW_OK) {
-		fprintf(stderr, "wops big glew error: %s\n", glewGetErrorString(err));
-	}
-	printf("loaded GLEW %s\n", glewGetString(GLEW_VERSION));
+int main(int argc, char **argv) {
+	GameState *gameState = initGameState();
+    gameState->display = initDisplay();
+	GLFWwindow *window = gameState->display->window;
 
 	// TEMPORARY camera
-	Camera* camera = initCamera(0.0f, 0.0f, 5.0f);
+	gameState->camera = initCamera(0.0f, 0.0f, 5.0f);
+	Camera *camera = gameState->camera;
 
 	float thing1Rot = 0.0f;
 	float thing2Rot = 0.0f;
@@ -92,7 +41,6 @@ int main(int argc, char** argv) {
 
 		// setup projection matrix
 		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
 		glLoadIdentity();
 		// temp frustum variables
 		// TODO move these to some sort of settings struct in the future
@@ -137,7 +85,8 @@ int main(int argc, char** argv) {
 		glLoadIdentity();
 		glTranslatef(100.0f, 100.0f, 0.0f);
 		drawQuad(100);
-		
+		glPopMatrix();
+
 		// check/call events and swap buffers at the end of the frame
 		glfwPollEvents();
 		glfwSwapBuffers(window);

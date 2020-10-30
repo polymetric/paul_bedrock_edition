@@ -1,7 +1,10 @@
 set(
 	SOURCES_LIST
 	main.c
+	gameState.c
 	draw.c
+	input.c
+	display.c
 	camera.c
 )
 
