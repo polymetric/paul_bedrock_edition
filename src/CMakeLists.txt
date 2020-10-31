@@ -8,7 +8,8 @@ set(
 	camera.c
 )
 
-if(MINGW AND NOT CMAKE_BUILD_TYPE MATCHES Debug)
+if(WIN32 AND NOT CMAKE_BUILD_TYPE MATCHES Debug)
+	message("DISABLED WIN32 CONSOLE THING")
 	add_executable(
 		paul
 		WIN32
@@ -21,8 +22,8 @@ else()
 	)
 endif()
 
-if(MINGW)
-	target_link_libraries(paul PRIVATE glew32s)
+if(WIN32)
+	target_link_libraries(paul PRIVATE glew32.a)
 	target_link_libraries(paul PRIVATE opengl32)
 	target_link_libraries(paul PRIVATE glu32)
 	target_link_libraries(paul PRIVATE glfw3)
