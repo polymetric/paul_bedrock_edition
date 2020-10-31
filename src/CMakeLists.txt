@@ -22,11 +22,16 @@ else()
 endif()
 
 if(MINGW)
-	target_link_libraries(paul PRIVATE libglew32)
+	target_link_libraries(paul PRIVATE glew32s)
 	target_link_libraries(paul PRIVATE opengl32)
 	target_link_libraries(paul PRIVATE glu32)
 	target_link_libraries(paul PRIVATE glfw3)
-endif(MINGW)
+else()
+	target_link_libraries(paul PRIVATE GLEW)
+	target_link_libraries(paul PRIVATE GLU)
+	target_link_libraries(paul PRIVATE GL)
+	target_link_libraries(paul PRIVATE glfw3)
+endif()
 
 if(UNIX AND NOT APPLE)
 
