@@ -9,20 +9,21 @@ set(
 )
 
 if(WIN32 AND NOT CMAKE_BUILD_TYPE MATCHES Debug)
-	message("DISABLED WIN32 CONSOLE THING")
 	add_executable(
-		paul
+		${PROJECT_NAME}
 		WIN32
 		${SOURCES_LIST}
 	)
 else()
 	add_executable(
-		paul
+		${PROJECT_NAME}
 		${SOURCES_LIST}
 	)
 endif()
 
 if(WIN32)
+	# for some reason we need to put .a on mingw windows because otherwise it
+	# links the dll even if it doesn't exist!?!
 	target_link_libraries(paul PRIVATE glew32.a)
 	target_link_libraries(paul PRIVATE opengl32)
 	target_link_libraries(paul PRIVATE glu32)
