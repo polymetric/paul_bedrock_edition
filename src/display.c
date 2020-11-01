@@ -31,7 +31,7 @@ Display *initDisplay() {
 		NULL						// share
 	);
 	if (display->window == NULL) {
-		printf("cant create window oof\n");
+		fprintf(stderr, "cant create window oof\n");
 		glfwTerminate();
 		exit(-1);
 	}
@@ -43,7 +43,7 @@ Display *initDisplay() {
 	if (err != GLEW_OK) {
 		fprintf(stderr, "wops big glew error: %s\n", glewGetErrorString(err));
 	}
-	printf("loaded GLEW %s\n", glewGetString(GLEW_VERSION));
+	fprintf(stderr, "loaded GLEW %s\n", glewGetString(GLEW_VERSION));
 
 	return display;
 }
