@@ -17,8 +17,8 @@ int main(int argc, char **argv) {
 	GameState *gameState = initGameState();
     gameState->display = initDisplay();
 
-	// initialize the key callback and give the callback
-	// a pointer to the game state
+	// initialize the key callback and give the callback a pointer to the game
+	// state
 	glfwSetKeyCallback(gameState->display->window, &keyCallback);
 	glfwSetWindowUserPointer(gameState->display->window, gameState);
 
@@ -77,6 +77,8 @@ int main(int argc, char **argv) {
 		glRotatef(thing1Rot, 0.0f, 1.0f, 0.0f);
 		drawQuad(1.0f);
 
+		// pop & push the matrix so we get a fresh copy of the original camera
+		// transformation
 		glPopMatrix();
 		glPushMatrix();
 
@@ -84,21 +86,27 @@ int main(int argc, char **argv) {
 		glRotatef(thing2Rot, 1.0f, 0.0f, 0.0f);
 		drawQuad(1.0f);
 
+		glPopMatrix();
+
 		// gui render
 		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
 		glLoadIdentity();
 		glOrtho(0, width, height, 0, 1, -1);
 
 		glMatrixMode(GL_MODELVIEW);
+
 		glLoadIdentity();
 		glTranslatef(100.0f, 100.0f, 0.0f);
 		drawQuad(100);
-		glPopMatrix();
 
 		// check/call events and swap buffers at the end of the frame
 		glfwPollEvents();
 		glfwSwapBuffers(window);
+
+		GLenum glError = glGetError();
+		if (glError != GL_NO_ERROR) {
+			fprintf(stderr, "gl error: %s\n", gluErrorString(glError));
+		}
 	}
 
 	return 0;
