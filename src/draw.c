@@ -71,39 +71,46 @@ void drawCubeCentered(float width, float height, float depth) {
     glBegin(GL_QUADS);
         // face Xa
      // glVertex3f(width, height, depth);
+        glNormal3f( 0,      0,      -1    );
         glVertex3f( width,  height, -depth);
         glVertex3f(-width,  height, -depth);
         glVertex3f(-width, -height, -depth);
         glVertex3f( width, -height, -depth);
    
         // face Za   
+        glNormal3f(-1,      0,       0    );
         glVertex3f(-width,  height, -depth);
         glVertex3f(-width,  height,  depth);
         glVertex3f(-width, -height,  depth);
         glVertex3f(-width, -height, -depth);
    
         // face Xb   
+        glNormal3f( 0,      0,       1    );
         glVertex3f(-width, -height,  depth);
         glVertex3f( width, -height,  depth);
         glVertex3f( width,  height,  depth);
         glVertex3f(-width,  height,  depth);
    
         // face Zb   
+        glNormal3f( 1,      0,       0    );
         glVertex3f( width, -height,  depth);
         glVertex3f( width, -height, -depth);
         glVertex3f( width,  height, -depth);
         glVertex3f( width,  height,  depth);
    
         // face Ya   
+        glNormal3f( 0,     -1,       0    );
         glVertex3f( width, -height,  depth);
         glVertex3f(-width, -height,  depth);
         glVertex3f(-width, -height, -depth);
         glVertex3f( width, -height, -depth);
    
         // face Yb   
+        glNormal3f( 0,      1,       0    );
         glVertex3f( width,  height, -depth);
         glVertex3f(-width,  height, -depth);
         glVertex3f(-width,  height,  depth);
         glVertex3f( width,  height,  depth);
     glEnd();
+    
 }

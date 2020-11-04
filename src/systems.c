@@ -23,6 +23,7 @@ void sys_world_pitch_yaw_update(Ecs *ecs) {
     for (i = 0; i < ecs->cmps_world_pitch_yaw_count; i++) {
         rot = ecs->cmps_world_pitch_yaw[i];
         rot->yaw += 1;
+        rot->pitch += .2;
     }
 }
 
@@ -41,7 +42,8 @@ void sys_renderable_update(Ecs *ecs) {
         
 		glPushMatrix();
         glTranslatef(pos->x, pos->y, pos->z);
-        glRotatef(rot->yaw, 0.0f, 1.0f, 0.0f);
+        glRotatef(rot->pitch, 1, 0, 0);
+        glRotatef(rot->yaw, 0, 1, 0);
 		drawCubeCentered(1, 1, 1);
 		glPopMatrix();
     }

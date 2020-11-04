@@ -22,6 +22,11 @@ void ecs_add_world_pos(Ecs *ecs, WorldPos *world_pos) {
     ecs->cmps_world_pos_count += 1;
 }
 
+WorldPos *ecs_get_world_pos(Ecs *ecs, int eid) {
+    // TODO error checking
+    return ecs->cmps_world_pos[eid];
+}
+
 void ecs_add_world_pitch_yaw(Ecs *ecs, WorldPitchYaw *world_pitch_yaw) {
     ecs->cmps_world_pitch_yaw[ecs->cmps_world_pitch_yaw_lastid] = world_pitch_yaw;
     ecs->cmps_world_pitch_yaw_lastid += 1;
