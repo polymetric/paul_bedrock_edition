@@ -5,8 +5,8 @@
 
 #include "gameState.h"
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void keyCallback(GLFWwindow* window, const int key, const int scancode, const int action, const int mods);
 
-void tickInput(GameState *gameState, GLFWwindow *window);
+void tickInput(GameState *gameState, const GLFWwindow *window);
 
 #endif

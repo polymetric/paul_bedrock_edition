@@ -4,7 +4,7 @@
 
 #include "draw.h"
 
-void drawQuad(float size) {
+void drawQuad(const float size) {
     glBegin(GL_QUADS);
         glVertex3f(-size, -size,  0.0f);
         glVertex3f( size, -size,  0.0f);
@@ -13,7 +13,7 @@ void drawQuad(float size) {
     glEnd();
 }
 
-void drawCube(float width, float height, float depth) {
+void drawCube(const float width, const float height, const float depth) {
     glBegin(GL_QUADS);
         // face Xa
      // glVertex3f(width, height, depth);
