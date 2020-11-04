@@ -1,7 +1,9 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-void drawQuad(const float size);
-void drawCube(const float width, const float height, const float depth);
+void drawQuad(float size);
+void drawQuadCentered(float size);
+void drawCube(float width, float height, float depth);
+void drawCubeCentered(float width, float height, float depth);
 
 #endif

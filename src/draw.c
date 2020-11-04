@@ -4,7 +4,7 @@
 
 #include "draw.h"
 
-void drawQuad(const float size) {
+void drawQuad(float size) {
     glBegin(GL_QUADS);
         glVertex3f(-size, -size,  0.0f);
         glVertex3f( size, -size,  0.0f);
@@ -13,7 +13,17 @@ void drawQuad(const float size) {
     glEnd();
 }
 
-void drawCube(const float width, const float height, const float depth) {
+void drawQuadCentered(float size) {
+    size /= 2;
+    glBegin(GL_QUADS);
+        glVertex3f(-size, -size,  0.0f);
+        glVertex3f( size, -size,  0.0f);
+        glVertex3f( size,  size,  0.0f);
+        glVertex3f(-size,  size,  0.0f);
+    glEnd();
+}
+
+void drawCube(float width, float height, float depth) {
     glBegin(GL_QUADS);
         // face Xa
      // glVertex3f(width, height, depth);
@@ -27,5 +37,73 @@ void drawCube(const float width, const float height, const float depth) {
         glVertex3f(0,     height, depth);
         glVertex3f(0,     0,      depth);
         glVertex3f(0,     0,      0    );
+
+        // face Xb
+        glVertex3f(0,     0,      depth);
+        glVertex3f(width, 0,      depth);
+        glVertex3f(width, height, depth);
+        glVertex3f(0,     height, depth);
+
+        // face Zb
+        glVertex3f(width, 0,      depth);
+        glVertex3f(width, 0,      0    );
+        glVertex3f(width, height, 0    );
+        glVertex3f(width, height, depth);
+
+        // face Ya
+        glVertex3f(width, 0,      depth);
+        glVertex3f(0,     0,      depth);
+        glVertex3f(0,     0,      0    );
+        glVertex3f(width, 0,      0    );
+
+        // face Yb
+        glVertex3f(width, height, 0    );
+        glVertex3f(0,     height, 0    );
+        glVertex3f(0,     height, depth);
+        glVertex3f(width, height, depth);
+    glEnd();
+}
+
+void drawCubeCentered(float width, float height, float depth) {
+    width  /= 2;
+    height /= 2;
+    depth  /= 2;
+    glBegin(GL_QUADS);
+        // face Xa
+     // glVertex3f(width, height, depth);
+        glVertex3f( width,  height, -depth);
+        glVertex3f(-width,  height, -depth);
+        glVertex3f(-width, -height, -depth);
+        glVertex3f( width, -height, -depth);
+   
+        // face Za   
+        glVertex3f(-width,  height, -depth);
+        glVertex3f(-width,  height,  depth);
+        glVertex3f(-width, -height,  depth);
+        glVertex3f(-width, -height, -depth);
+   
+        // face Xb   
+        glVertex3f(-width, -height,  depth);
+        glVertex3f( width, -height,  depth);
+        glVertex3f( width,  height,  depth);
+        glVertex3f(-width,  height,  depth);
+   
+        // face Zb   
+        glVertex3f( width, -height,  depth);
+        glVertex3f( width, -height, -depth);
+        glVertex3f( width,  height, -depth);
+        glVertex3f( width,  height,  depth);
+   
+        // face Ya   
+        glVertex3f( width, -height,  depth);
+        glVertex3f(-width, -height,  depth);
+        glVertex3f(-width, -height, -depth);
+        glVertex3f( width, -height, -depth);
+   
+        // face Yb   
+        glVertex3f( width,  height, -depth);
+        glVertex3f(-width,  height, -depth);
+        glVertex3f(-width,  height,  depth);
+        glVertex3f( width,  height,  depth);
     glEnd();
 }

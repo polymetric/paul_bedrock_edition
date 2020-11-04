@@ -47,3 +47,9 @@ Display *initDisplay() {
 
 	return display;
 }
+
+// resize the gl viewport when the window is resized by the user
+void display_update_size(Display *display) {
+	glfwGetFramebufferSize(display->window, &display->width, &display->height);
+	glViewport(0, 0, display->width, display->height);
+}

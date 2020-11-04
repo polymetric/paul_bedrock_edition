@@ -6,6 +6,10 @@ set(
 	input.c
 	display.c
 	camera.c
+	ecs.c
+	entities.c
+	systems.c
+	components.c
 )
 
 if(WIN32 AND NOT CMAKE_BUILD_TYPE MATCHES Debug)

@@ -9,12 +9,24 @@
 #include "input.h"
 #include "draw.h"
 #include "camera.h"
+#include "ecs.h"
+#include "systems.h"
+#include "entities.h"
 
 #define WINDOW_DEFAULT_WIDTH    800
 #define WINDOW_DEFAULT_HEIGHT   600
 
 int main(int argc, char **argv) {
-	GameState *gameState = initGameState();
+	GameState *gameState; // root data structure, holds pretty much everything in the game
+	GLFWwindow *window; // just an alias to a window struct ptr held by the gamestate
+	Camera *camera; // alias to gameState->camera
+	GLenum glError; // holds the last error 
+
+	// TODO currently we have some struct initializers as functions that return
+	// a pointer to the struct, and some that return void and take a **pointer
+	// which is modified. the former is proobably better but either way
+	// they should be unified
+	gameState = initGameState();
     gameState->display = initDisplay();
 
 	// initialize the key callback and give the callback a pointer to the game
@@ -23,87 +35,49 @@ int main(int argc, char **argv) {
 	glfwSetWindowUserPointer(gameState->display->window, gameState);
 
 	// makes `window` a shorthand for `gameState->display->window`
-	GLFWwindow *window = gameState->display->window; 
+	window = gameState->display->window; 
 
 	// TEMPORARY camera
-	gameState->camera = initCamera(0.0f, 0.0f, 5.0f);
-	Camera *camera = gameState->camera;
+	gameState->camera = initCamera(0.0f, 0.0f, 2.0f);
+	camera = gameState->camera;
 
-	float thing1Rot = 0.0f;
-	float thing2Rot = 0.0f;
+	ecs_init(&gameState->ecs);
+
+	// add test shit
+	int cube1 = create_spinsquare(gameState->ecs);
+	int cube2 = create_spinsquare(gameState->ecs);
 	
 	// main loop
 	while (!glfwWindowShouldClose(window)) {
 		// TICK
 		tickInput(gameState, window);
-		thing1Rot += 1.0f;
-		thing2Rot += 1.0f;
+		sys_world_pos_update(gameState->ecs);
+		sys_world_pitch_yaw_update(gameState->ecs);
 
 		// DRAW
+		display_update_size(gameState->display);
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// resize the gl viewport when the window is resized by the user
-		int width, height;
-		glfwGetFramebufferSize(window, &width, &height);
-		glViewport(0, 0, width, height);
-
-		// setup projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		// temp frustum variables
-		// TODO move these to some sort of settings struct in the future
-		GLdouble vFov = 70;
-		int zNear = 1;
-		int zFar = 1000;
-		gluPerspective(
-			vFov,									// vertical FOV
-			(GLfloat) width / (GLfloat) height,		// aspect ratio
-			(GLfloat) zNear,						// near clip plane
-			(GLfloat) zFar							// far clip plane
-		);
-
-		// setup camera transformation
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glRotatef(camera->pitch, 1.0f, 0.0f, 0.0f);
-		glRotatef(camera->yaw, 0.0f, 1.0f, 0.0f);
-		glTranslatef(-camera->x, -camera->y, -camera->z);
-
-		// actual rendering
-
-		// quad a
-		glPushMatrix();
-		glRotatef(thing1Rot, 0.0f, 1.0f, 0.0f);
-		drawQuad(1.0f);
-
-		// pop & push the matrix so we get a fresh copy of the original camera
-		// transformation
-		glPopMatrix();
-		glPushMatrix();
-
-		glTranslatef(-3, 0, 0);
-		glRotatef(thing2Rot, 1.0f, 0.0f, 0.0f);
-		drawQuad(1.0f);
-
-		glPopMatrix();
+		setupCameraMatrices(camera, gameState->display);
+		sys_renderable_update(gameState->ecs);
 
 		// gui render
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, width, height, 0, 1, -1);
+		// glMatrixMode(GL_PROJECTION);
+		// glLoadIdentity();
+		// glOrtho(0, width, height, 0, 1, -1);
 
-		glMatrixMode(GL_MODELVIEW);
+		// glMatrixMode(GL_MODELVIEW);
 
-		glLoadIdentity();
-		glTranslatef(100.0f, 100.0f, 0.0f);
-		drawQuad(100);
+		// glLoadIdentity();
+		// glTranslatef(100.0f, 100.0f, 0.0f);
+		// drawQuad(100);
 
 		// check/call events and swap buffers at the end of the frame
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 
-		GLenum glError = glGetError();
+		glError = glGetError();
 		if (glError != GL_NO_ERROR) {
 			fprintf(stderr, "gl error: %s\n", gluErrorString(glError));
 		}

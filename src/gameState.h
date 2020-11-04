@@ -5,11 +5,12 @@
 
 #include "display.h"
 #include "camera.h"
+#include "ecs.h"
 
 typedef struct GameState {
-    Display* display;
-
-    Camera* camera;
+    Display *display;
+    Camera *camera;
+    Ecs *ecs;
 } GameState;
 
 GameState *initGameState();

@@ -10,5 +10,6 @@ typedef struct Display {
 } Display;
 
 Display *initDisplay();
+void display_update_size(Display *display);
 
 #endif
