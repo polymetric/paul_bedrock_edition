@@ -18,8 +18,8 @@ WorldPitchYaw *cmp_create_world_pitch_yaw(int eid) {
     return world_pitch_yaw;
 }
 
-Renderable *cmp_create_renderable(int eid) {
-    Renderable *renderable = (Renderable*) malloc(sizeof(Renderable));
-    renderable->eid = eid;
-    return renderable;
+RenderCube *cmp_create_render_cube(int eid) {
+    RenderCube *render_cube = (RenderCube*) malloc(sizeof(RenderCube));
+    render_cube->eid = eid;
+    return render_cube;
 }

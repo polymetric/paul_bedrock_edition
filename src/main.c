@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
 		glLightfv(GL_LIGHT0, GL_POSITION, temp);
 
 		setupCameraMatrices(camera, gameState->display);
-		sys_renderable_update(gameState->ecs);
+		sys_render_cube_update(gameState->ecs);
 
 		// gui render
 		// glMatrixMode(GL_PROJECTION);

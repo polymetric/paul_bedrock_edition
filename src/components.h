@@ -15,10 +15,10 @@ typedef struct WorldPitchYaw {
 
 WorldPitchYaw *cmp_create_world_pitch_yaw(int eid);
 
-typedef struct Renderable {
+typedef struct RenderCube {
     int eid;
-} Renderable;
+} RenderCube;
 
-Renderable *cmp_create_renderable(int eid);
+RenderCube *cmp_create_render_cube(int eid);
 
 #endif

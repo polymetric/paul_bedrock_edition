@@ -16,6 +16,6 @@ int create_spinsquare(Ecs *ecs) {
     eid = create_entity_id(ecs);
     ecs_add_world_pos(ecs, cmp_create_world_pos(eid));
     ecs_add_world_pitch_yaw(ecs, cmp_create_world_pitch_yaw(eid));
-    ecs_add_renderable(ecs, cmp_create_renderable(eid));
+    ecs_add_render_cube(ecs, cmp_create_render_cube(eid));
     return eid;
 }

@@ -70,7 +70,7 @@ void drawCubeCentered(float width, float height, float depth) {
     depth  /= 2;
     glBegin(GL_QUADS);
         // face Xa
-     // glVertex3f(width, height, depth);
+     // glVertex3f( width,  height,  depth);
         glNormal3f( 0,      0,      -1    );
         glVertex3f( width,  height, -depth);
         glVertex3f(-width,  height, -depth);

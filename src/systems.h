@@ -6,6 +6,6 @@
 
 void sys_world_pos_update(Ecs *ecs);
 void sys_world_pos_set(Ecs *ecs, int eid, float x, float y, float z);
-void sys_renderable_update(Ecs *ecs);
+void sys_render_cube_update(Ecs *ecs);
 
 #endif

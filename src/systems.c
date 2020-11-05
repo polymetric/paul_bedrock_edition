@@ -13,6 +13,7 @@ void sys_world_pos_update(Ecs *ecs) {
 
     for (i = 0; i < ecs->cmps_world_pos_count; i++) {
         pos = ecs->cmps_world_pos[i];
+
     }
 }
 
@@ -22,12 +23,13 @@ void sys_world_pitch_yaw_update(Ecs *ecs) {
 
     for (i = 0; i < ecs->cmps_world_pitch_yaw_count; i++) {
         rot = ecs->cmps_world_pitch_yaw[i];
+
         rot->yaw += 1;
         rot->pitch += .2;
     }
 }
 
-void sys_renderable_update(Ecs *ecs) {
+void sys_render_cube_update(Ecs *ecs) {
     int i;
     WorldPos *pos;
     WorldPitchYaw *rot;
@@ -36,7 +38,7 @@ void sys_renderable_update(Ecs *ecs) {
     // this still assumes we've just loaded the camera matrix.
     glMatrixMode(GL_MODELVIEW);
 
-    for (i = 0; i < ecs->cmps_renderable_count; i++) {
+    for (i = 0; i < ecs->cmps_render_cube_count; i++) {
         pos = ecs->cmps_world_pos[i];
         rot = ecs->cmps_world_pitch_yaw[i];
         
