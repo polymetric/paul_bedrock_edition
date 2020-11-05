@@ -38,3 +38,7 @@ void ecs_add_render_cube(Ecs *ecs, RenderCube *render_cube) {
     ecs->cmps_render_cube_lastid += 1;
     ecs->cmps_render_cube_count += 1;
 }
+
+RenderCube *ecs_get_render_cube(Ecs *ecs, int eid) {
+    return ecs->cmps_render_cube[ecs->cmps_render_cube_lastid];
+}

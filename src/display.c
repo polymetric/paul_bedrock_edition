@@ -9,9 +9,6 @@
 
 #include "camera.h"
 
-#define WINDOW_DEFAULT_WIDTH    800
-#define WINDOW_DEFAULT_HEIGHT   600
-
 Display *initDisplay() {
     Display *display = (Display*) malloc(sizeof(Display));
     

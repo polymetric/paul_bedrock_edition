@@ -3,7 +3,7 @@
 
 #include "components.h"
 
-#define COMPONENT_ARRAY_SIZE 256
+#define COMPONENT_ARRAY_SIZE 1024
 
 typedef struct Ecs {
     int             entity_count;

@@ -6,6 +6,7 @@
 #include "components.h"
 #include "systems.h"
 #include "draw.h"
+#include <math.h>
 
 void sys_world_pos_update(Ecs *ecs) {
     int i;
@@ -17,6 +18,8 @@ void sys_world_pos_update(Ecs *ecs) {
     }
 }
 
+int ticks = 0;
+
 void sys_world_pitch_yaw_update(Ecs *ecs) {
     int i;
     WorldPitchYaw *rot;
@@ -24,8 +27,15 @@ void sys_world_pitch_yaw_update(Ecs *ecs) {
     for (i = 0; i < ecs->cmps_world_pitch_yaw_count; i++) {
         rot = ecs->cmps_world_pitch_yaw[i];
 
-        rot->yaw += 1;
-        rot->pitch += .2;
+        // rot->yaw += 1;
+        // rot->pitch += .2;
+        
+        ticks += 1;
+        const float period = 4;
+        const float tickrate = 60;
+        rot->yaw = sin(ticks * (M_PI * 2) / tickrate / period) * 90;
+        printf("yaw:\t\t%f\n", rot->yaw);
+        rot->pitch += 1;
     }
 }
 

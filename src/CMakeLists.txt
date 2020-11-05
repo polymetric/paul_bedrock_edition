@@ -12,6 +12,9 @@ set(
 	components.c
 )
 
+configure_file(config.h.in config.h)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 if(WIN32 AND NOT CMAKE_BUILD_TYPE MATCHES Debug)
 	add_executable(
 		${PROJECT_NAME}

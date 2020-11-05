@@ -14,7 +14,7 @@ WorldPitchYaw *cmp_create_world_pitch_yaw(int eid) {
     WorldPitchYaw *world_pitch_yaw = (WorldPitchYaw*) malloc(sizeof(WorldPitchYaw));
     world_pitch_yaw->eid = eid;
     world_pitch_yaw->pitch = 0;
-    world_pitch_yaw->yaw = 123;
+    world_pitch_yaw->yaw = 0;
     return world_pitch_yaw;
 }
 
