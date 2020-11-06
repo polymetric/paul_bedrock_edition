@@ -21,8 +21,10 @@ typedef struct Ecs {
 
 void ecs_init(Ecs **ecs);
 void ecs_add_world_pos(Ecs *ecs, WorldPos *world_pos);
-WorldPos *ecs_get_world_pos(Ecs *ecs, int eid);
+WorldPos *ecs_get_world_pos(const Ecs *ecs, const int eid);
 void ecs_add_world_pitch_yaw(Ecs *ecs, WorldPitchYaw *world_pitch_yaw);
+WorldPitchYaw *ecs_get_world_pitch_yaw(const Ecs *ecs, const int eid);
 void ecs_add_render_cube(Ecs *ecs, RenderCube *render_cube);
+RenderCube *ecs_get_render_cube(const Ecs *ecs, const int eid);
 
 #endif

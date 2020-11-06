@@ -13,29 +13,23 @@ void sys_world_pos_update(Ecs *ecs) {
     WorldPos *pos;
 
     for (i = 0; i < ecs->cmps_world_pos_count; i++) {
-        pos = ecs->cmps_world_pos[i];
+        pos = ecs_get_world_pos(ecs, i);
 
+        pos->x += pos->vel_x;
+        pos->y += pos->vel_y;
+        pos->z += pos->vel_z;
     }
 }
-
-int ticks = 0;
 
 void sys_world_pitch_yaw_update(Ecs *ecs) {
     int i;
     WorldPitchYaw *rot;
 
     for (i = 0; i < ecs->cmps_world_pitch_yaw_count; i++) {
-        rot = ecs->cmps_world_pitch_yaw[i];
-
-        // rot->yaw += 1;
-        // rot->pitch += .2;
+        rot = ecs_get_world_pitch_yaw(ecs, i);
         
-        ticks += 1;
-        const float period = 4;
-        const float tickrate = 60;
-        rot->yaw = sin(ticks * (M_PI * 2) / tickrate / period) * 90;
-        printf("yaw:\t\t%f\n", rot->yaw);
-        rot->pitch += 1;
+        rot->pitch += rot->vel_pitch;
+        rot->yaw += rot->vel_yaw;
     }
 }
 
@@ -43,20 +37,22 @@ void sys_render_cube_update(Ecs *ecs) {
     int i;
     WorldPos *pos;
     WorldPitchYaw *rot;
+    RenderCube *cube;
 
     // setup gl state
     // this still assumes we've just loaded the camera matrix.
     glMatrixMode(GL_MODELVIEW);
 
     for (i = 0; i < ecs->cmps_render_cube_count; i++) {
-        pos = ecs->cmps_world_pos[i];
-        rot = ecs->cmps_world_pitch_yaw[i];
+        pos = ecs_get_world_pos(ecs, i);
+        rot = ecs_get_world_pitch_yaw(ecs, i);
+        cube = ecs_get_render_cube(ecs, i);
         
 		glPushMatrix();
         glTranslatef(pos->x, pos->y, pos->z);
         glRotatef(rot->pitch, 1, 0, 0);
         glRotatef(rot->yaw, 0, 1, 0);
-		drawCubeCentered(1, 1, 1);
+		drawCubeCentered(cube->width, cube->height, cube->depth);
 		glPopMatrix();
     }
 }

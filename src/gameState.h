@@ -7,10 +7,17 @@
 #include "camera.h"
 #include "ecs.h"
 
+typedef enum GameMode {
+    GAMEMODE_MAIN_MENU,
+    GAMEMODE_INGAME,
+    GAMEMODE_INGAME_PAUSED
+} GameMode;
+
 typedef struct GameState {
     Display *display;
     Camera *camera;
     Ecs *ecs;
+    GameMode mode;
 } GameState;
 
 GameState *initGameState();

@@ -18,6 +18,9 @@ Display *initDisplay() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+
+	// TODO move this to a settings struct
+	glfwWindowHint(GLFW_SAMPLES, 8);
 	
 	// create window and check for errors
 	display->window = glfwCreateWindow(

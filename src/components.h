@@ -12,12 +12,14 @@ WorldPos *cmp_create_world_pos(int eid);
 typedef struct WorldPitchYaw {
     int eid;
     float pitch, yaw;
+    float vel_pitch, vel_yaw;
 } WorldPitchYaw;
 
 WorldPitchYaw *cmp_create_world_pitch_yaw(int eid);
 
 typedef struct RenderCube {
     int eid;
+    float width, height, depth;
 } RenderCube;
 
 RenderCube *cmp_create_render_cube(int eid);

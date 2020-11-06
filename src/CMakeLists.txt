@@ -10,6 +10,7 @@ set(
 	entities.c
 	systems.c
 	components.c
+	paul_math.c
 )
 
 configure_file(config.h.in config.h)

@@ -15,6 +15,7 @@
 #include "entities.h"
 
 #include <time.h>
+#include <math.h>
 
 int main(int argc, char **argv) {
 	GameState *gameState; // root data structure, holds pretty much everything in the game
@@ -30,6 +31,7 @@ int main(int argc, char **argv) {
 	// they should be unified
 	gameState = initGameState();
     gameState->display = initDisplay();
+	gameState->mode = GAMEMODE_INGAME_PAUSED;
 
 	// makes `window` a shorthand for `gameState->display->window`
 	window = gameState->display->window; 
@@ -37,7 +39,7 @@ int main(int argc, char **argv) {
 	// initialize the key callback and give the callback a pointer to the game
 	// state
 	glfwSetKeyCallback(window, &keyCallback);
-	glfwSetCursorPosCallback(window, &cursorCallback);
+	glfwSetCursorEnterCallback(window, &cursor_enter_callback);
 	glfwSetWindowUserPointer(window, gameState);
 
 	// TEMPORARY camera
@@ -47,37 +49,43 @@ int main(int argc, char **argv) {
 	ecs_init(&gameState->ecs);
 
 	// add test shit
-	int cube1 = create_spinsquare(gameState->ecs);
-	ecs_get_world_pos(gameState->ecs, cube1)->x = 0;
-	ecs_get_world_pos(gameState->ecs, cube1)->y = 0;
-	ecs_get_world_pos(gameState->ecs, cube1)->z = -2;
-	int cube2 = create_spinsquare(gameState->ecs);
-	ecs_get_world_pos(gameState->ecs, cube2)->x = 5;
-	ecs_get_world_pos(gameState->ecs, cube2)->y = 2;
-	ecs_get_world_pos(gameState->ecs, cube2)->z = -8;
-	int cube3 = create_spinsquare(gameState->ecs);
-	ecs_get_world_pos(gameState->ecs, cube3)->x = -5;
-	ecs_get_world_pos(gameState->ecs, cube3)->y = -2;
-	ecs_get_world_pos(gameState->ecs, cube3)->z = 8;
+	// int cube1 = create_spinsquare(gameState->ecs);
+	// ecs_get_world_pos(gameState->ecs, cube1)->x = 0;
+	// ecs_get_world_pos(gameState->ecs, cube1)->y = 0;
+	// ecs_get_world_pos(gameState->ecs, cube1)->z = -2;
+	// int cube2 = create_spinsquare(gameState->ecs);
+	// ecs_get_world_pos(gameState->ecs, cube2)->x = 5;
+	// ecs_get_world_pos(gameState->ecs, cube2)->y = 2;
+	// ecs_get_world_pos(gameState->ecs, cube2)->z = -8;
 
-	srand(time(NULL));
 	int i;
-	// for (i = 0; i < 1; i++) {
-	// 	int cube = create_spinsquare(gameState->ecs);
-	// 	// ecs_get_world_pos(gameState->ecs, cube)->x = rand() % 1000 - 500;
-	// 	// ecs_get_world_pos(gameState->ecs, cube)->y = rand() % 1000 - 500;
-	// 	// ecs_get_world_pos(gameState->ecs, cube)->z = rand() % 1000 - 500;
-	// 	ecs_get_world_pos(gameState->ecs, cube)->x = -5;
-	// 	ecs_get_world_pos(gameState->ecs, cube)->y = -2;
-	// 	ecs_get_world_pos(gameState->ecs, cube)->z = 8;
-	// }
+	for (i = 0; i < 1000; i++) {
+		int eid;
+		WorldPos *pos;
+		WorldPitchYaw *rot;
+
+		eid = create_spinsquare(gameState->ecs);
+		pos = ecs_get_world_pos(gameState->ecs, eid);
+		rot = ecs_get_world_pitch_yaw(gameState->ecs, eid);
+
+		pos->x = (float) i / 10;
+		pos->z = sin((float) i / 15) * 5;
+
+		float x = pos->x;
+	}
+	// printf("%12.3f %12.3f %12.3f", x, y, z);
 	
 	// main loop
 	while (!glfwWindowShouldClose(window)) {
 		// TICK
+		glfwPollEvents(); // this is where most of the input callbacks are
+		                  // actually called from
 		tickInput(gameState, window);
-		sys_world_pos_update(gameState->ecs);
-		sys_world_pitch_yaw_update(gameState->ecs);
+		
+		if (gameState->mode == GAMEMODE_INGAME) {
+			sys_world_pos_update(gameState->ecs);
+			sys_world_pitch_yaw_update(gameState->ecs);
+		}
 
 		// DRAW
 		display_update_size(gameState->display);
@@ -94,6 +102,7 @@ int main(int argc, char **argv) {
 		float temp[] = { 0, 3, 1 };
 		glLightfv(GL_LIGHT0, GL_POSITION, temp);
 
+		glEnable(GL_MULTISAMPLE);
 		sys_render_cube_update(gameState->ecs);
 
 		// gui render
@@ -111,8 +120,6 @@ int main(int argc, char **argv) {
 		// glTranslatef(100.0f, 100.0f, 0.0f);
 		// drawQuad(100);
 
-		// check/call events and swap buffers at the end of the frame
-		glfwPollEvents();
 		glfwSwapBuffers(window);
 
 		glError = glGetError();
