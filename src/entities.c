@@ -24,10 +24,10 @@ int create_spinsquare(Ecs *ecs) {
     pos = ecs_get_world_pos(ecs, eid);
     rot = ecs_get_world_pitch_yaw(ecs, eid);
 
-    // pos->x = rand_float() % 200.0 - 100.0;
-    // pos->y = rand_float() % 200.0 - 100.0;
-    // pos->z = rand_float() % 200.0 - 100.0;
-    // float vel_max = .05;
+    // pos->x = rand_float() * 200.0 - 100.0;
+    // pos->y = rand_float() * 200.0 - 100.0;
+    // pos->z = rand_float() * 200.0 - 100.0;
+    float vel_max = 1;
     // rot->vel_pitch = rand_float() * vel_max - vel_max/2;
     // rot->vel_yaw = rand_float() * vel_max - vel_max/2;
     // rot->pitch = rand_float() * 360.0;

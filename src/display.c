@@ -9,6 +9,10 @@
 
 #include "camera.h"
 
+void glfwErrorCallback(int dumm, const char *desc) {
+	printf("%s\n", desc);
+}
+
 Display *initDisplay() {
     Display *display = (Display*) malloc(sizeof(Display));
     

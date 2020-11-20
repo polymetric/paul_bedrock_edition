@@ -65,7 +65,6 @@ void tickInput(GameState *gameState, GLFWwindow *window) {
 		// if the cursor has just entered the frame this tick, don't process mouse
 		// input, just set the position to zero.
 		if (cursor_entered_this_tick) {
-			printf("cursor entered\n");
 			glfwSetCursorPos(window, 0, 0);
 			cursor_entered_this_tick = 0;
 		}

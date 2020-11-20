@@ -52,7 +52,8 @@ void sys_render_cube_update(Ecs *ecs) {
         glTranslatef(pos->x, pos->y, pos->z);
         glRotatef(rot->pitch, 1, 0, 0);
         glRotatef(rot->yaw, 0, 1, 0);
-		drawCubeCentered(cube->width, cube->height, cube->depth);
+		// drawCubeCentered(cube->width, cube->height, cube->depth);
+        gluSphere(gluNewQuadric(), 1, 16, 16);  
 		glPopMatrix();
     }
 }

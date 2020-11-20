@@ -1,5 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <time.h>
+#include <math.h>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -13,9 +16,6 @@
 #include "ecs.h"
 #include "systems.h"
 #include "entities.h"
-
-#include <time.h>
-#include <math.h>
 
 int main(int argc, char **argv) {
 	GameState *gameState; // root data structure, holds pretty much everything in the game
@@ -59,7 +59,8 @@ int main(int argc, char **argv) {
 	// ecs_get_world_pos(gameState->ecs, cube2)->z = -8;
 
 	int i;
-	for (i = 0; i < 1000; i++) {
+	float x, y, z;
+	for (i = 0; i < 5; i++) {
 		int eid;
 		WorldPos *pos;
 		WorldPitchYaw *rot;
@@ -68,12 +69,16 @@ int main(int argc, char **argv) {
 		pos = ecs_get_world_pos(gameState->ecs, eid);
 		rot = ecs_get_world_pitch_yaw(gameState->ecs, eid);
 
-		pos->x = (float) i / 10;
-		pos->z = sin((float) i / 15) * 5;
+		// pos->x = (float) i / 10;
+		// pos->z = sin((float) i / 15) * 5;
+		pos->x = i * 2;
+		pos->z = i * 2;
 
-		float x = pos->x;
+		x = pos->x;
+		y = pos->y;
+		z = pos->z;
+		printf("%12.3f %12.3f %12.3f\n", x, y, z);
 	}
-	// printf("%12.3f %12.3f %12.3f", x, y, z);
 	
 	// main loop
 	while (!glfwWindowShouldClose(window)) {
@@ -97,10 +102,10 @@ int main(int argc, char **argv) {
 
 		// temp lighting test
 		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0);
 		glEnable(GL_COLOR_MATERIAL);
-		float temp[] = { 0, 3, 1 };
-		glLightfv(GL_LIGHT0, GL_POSITION, temp);
+		glEnable(GL_LIGHT0);
+		float temp1[] = { .5, 1, .25, 0 };
+		glLightfv(GL_LIGHT0, GL_POSITION, temp1);
 
 		glEnable(GL_MULTISAMPLE);
 		sys_render_cube_update(gameState->ecs);
