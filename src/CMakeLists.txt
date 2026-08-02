@@ -41,6 +41,7 @@ else()
 	target_link_libraries(${PROJECT_NAME} PRIVATE GLU)
 	target_link_libraries(${PROJECT_NAME} PRIVATE GL)
 	target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+	target_link_libraries(${PROJECT_NAME} PRIVATE m)
 endif()
 
 if(UNIX AND NOT APPLE)

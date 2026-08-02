@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./build.sh && ./build/bin/paul.exe
+./build.sh && ./build/bin/paul
